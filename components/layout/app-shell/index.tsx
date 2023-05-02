@@ -35,6 +35,11 @@ export const AppShell: ComponentWithChildren<AppShellProps> = ({
   layout,
   ecosystem,
 }) => {
+  console.log("Appshell",
+   children,
+    layout,
+    ecosystem,);
+  
   return (
     <Grid
       minH="calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom))"
@@ -98,7 +103,7 @@ const AppHeader: React.FC<Pick<AppShellProps, "ecosystem">> = ({
           <Link href="/dashboard">
             <Logo hideWordmark />
           </Link>
-          <CmdKSearch />
+          {/* <CmdKSearch /> */}
         </Flex>
         <Flex
           align="center"
@@ -244,6 +249,28 @@ const AppHeader: React.FC<Pick<AppShellProps, "ecosystem">> = ({
             rounded="lg"
           >
             Storage
+          </LinkButton>
+          <LinkButton
+            href="/marketplace/buy"
+            isActive={pathname === "/marketplace/buy"}
+            _active={{
+              bg: "bgBlack",
+              color: "bgWhite",
+            }}
+            rounded="lg"
+          >
+            Buy
+          </LinkButton>
+          <LinkButton
+            href="/marketplace/sell"
+            isActive={pathname === "/marketplace/sell"}
+            _active={{
+              bg: "bgBlack",
+              color: "bgWhite",
+            }}
+            rounded="lg"
+          >
+            Sell
           </LinkButton>
           <LinkButton
             href="/dashboard/rpc"

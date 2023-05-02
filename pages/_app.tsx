@@ -13,6 +13,8 @@ import posthog from "posthog-js";
 import { memo, useEffect, useMemo, useRef } from "react";
 import { generateBreakpointTypographyCssVars } from "tw-components/utils/typography";
 import type { ThirdwebNextPage } from "utils/types";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { NETWORK } from "const/contractAddresses";
 
 // eslint-disable-next-line new-cap
 const inter = Inter({
@@ -123,7 +125,7 @@ const ConsoleAppWrapper: React.FC<AppPropsWithLayout> = ({
   // shortcut everything and only set up the necessities for the OG renderer
   if (router.pathname.startsWith("/_og/")) {
     return (
-      <>
+      <ThirdwebProvider activeChain={NETWORK}>
         <Global
           styles={css`
             ${fontSizeCssVars}
@@ -140,16 +142,17 @@ const ConsoleAppWrapper: React.FC<AppPropsWithLayout> = ({
         <ChakraProvider theme={chakraThemeWithFonts}>
           <Component {...pageProps} />
         </ChakraProvider>
-      </>
+      </ThirdwebProvider>
     );
   }
   return (
+    <ThirdwebProvider activeChain={NETWORK}>
     <ConsoleApp
       seoCanonical={canonicalUrl}
       Component={Component}
       pageProps={pageProps}
       isFallback={router.isFallback}
-    />
+    /></ThirdwebProvider>
   );
 };
 
@@ -169,6 +172,7 @@ const ConsoleApp = memo(function ConsoleApp({
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
+    <ThirdwebProvider activeChain={NETWORK}>
     <PlausibleProvider
       domain="thirdweb.com"
       customDomain="https://pl.thirdweb.com"
@@ -236,6 +240,7 @@ const ConsoleApp = memo(function ConsoleApp({
           : getLayout(<Component {...pageProps} />, pageProps)}
       </ChakraProvider>
     </PlausibleProvider>
+    </ThirdwebProvider>
   );
 });
 
