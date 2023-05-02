@@ -22,8 +22,8 @@ import { useTrack } from "hooks/analytics/useTrack";
 import Image from "next/image";
 import { PageId } from "page-id";
 import { useMemo } from "react";
-import { FiChevronsRight } from "react-icons/fi";
-import { Card, Heading, Text, TrackedLink } from "tw-components";
+import { FiChevronsRight, FiPlus } from "react-icons/fi";
+import { Card, Heading, LinkButton, Text, TrackedLink } from "tw-components";
 import { ThirdwebNextPage } from "utils/types";
 
 type ContentItem = {
@@ -219,16 +219,19 @@ const Contracts: ThirdwebNextPage = () => {
 
   return (
     <Flex direction="column" gap={12}>
+      {/* add button here */}
       {hasContracts ? (
         <Flex gap={8} direction="column">
           <DeployedContracts contractListQuery={deployedContracts} limit={50} />
         </Flex>
       ) : (
-        <StepsCard
-          title="Get started with deploying contracts"
-          description="This guide will help you to start deploying contracts on-chain in just a few minutes."
-          steps={steps}
-        />
+          <LinkButton
+            leftIcon={<FiPlus />}
+            colorScheme="primary"
+            href="/thirdweb.eth/TokenERC721"
+          >
+            Create
+          </LinkButton>
       )}
     </Flex>
   );
